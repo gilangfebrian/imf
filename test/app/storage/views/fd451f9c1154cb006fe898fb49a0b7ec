@@ -1,0 +1,21 @@
+<meta charset="utf-8">
+<meta name="description" content="deskripsi">
+<meta name="editor" content="Gilang Febrian">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CMC Training Tools &raquo; E-Training</title>
+<?php echo HTML::style('css/bootstrap.min.css');; ?>
+<?php echo HTML::style('css/bootstrap-wysihtml5.css');; ?>
+<?php echo HTML::style('css/slider.css');; ?>
+<?php echo HTML::style('css/social-coloredicons-buttons.css');; ?>
+<?php echo HTML::style('css/jquery.ambiance.css');; ?>
+<?php echo HTML::style('css/animation.css');; ?>
+<?php echo HTML::style('css/font-awesome.css');; ?>
+<?php echo HTML::style('css/bootstrap.css');; ?>
+<?php echo HTML::style('css/atoz.css');; ?>
+
+<style>
+    body {
+        padding-top: 70px;
+    }
+</style>

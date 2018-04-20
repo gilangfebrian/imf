@@ -1,0 +1,176 @@
+<?php $__env->startSection('content'); ?>
+<!-- Main component for a primary marketing message or call to action -->
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 style="padding-left:20px"><i> Test Detail
+            ( <?php echo $lembar->nama; ?> )
+        </i></h3>
+    </div>
+    <div class="panel-body">
+
+        <?php if (Session::has('messages')): ?>
+        <?php foreach (Session::get('messages') as $message): ?>
+        <?php if ($message[0] == 'error'): ?>
+        <div class="alert alert-danger"><?php echo $message[1]; ?></div>
+        <?php elseif ($message[0] == 'success'): ?>
+        <div class="alert alert-success"><?php echo $message[1]; ?></div>
+        <?php endif; ?>
+        <?php endforeach; ?>
+        <?php endif; ?>
+
+
+        <div class="btn-default btn-lg pull-right popover-hover" data-content="Nilai Akhir">
+            <?php if (!$userjawablembar->wkt_selesai): ?>
+            <h1><span class="glyphicon glyphicon-play"></span></h1>
+            <?php else: ?>
+            <h1><span class="glyphicon glyphicon-ok"></span> <?php echo $userjawablembar->score; ?></h1>
+            <?php endif; ?>
+        </div>
+
+        <blockquote class="pull-right">
+            <div class="btn-default btn-xs pull-right popover-hover" data-content="pengambil kuis">
+                <span class="glyphicon glyphicon-user"></span> <?php echo $userjawablembar->user->email; ?>
+            </div>
+            <div class="clearfix"></div>
+            <div class="btn-default btn-xs pull-right popover-hover" data-content="diambil pada">
+                <span class="glyphicon glyphicon-time"></span> <?php echo date("d F Y
+                H:i:s",strtotime($userjawablembar->wkt_mulai)); ?>
+            </div>
+            <div class="clearfix"></div>
+            <div class="btn-default btn-xs pull-right popover-hover" data-content="selesai pada">
+                <span class="glyphicon glyphicon-time"></span> <?php echo date("d F Y
+                H:i:s",strtotime($userjawablembar->wkt_selesai)); ?>
+            </div>
+            <div class="clearfix"></div>
+            <div class="btn-default btn-xs pull-right popover-hover" data-content="waktu penyelesaian">
+                <span class="glyphicon glyphicon-time"></span> <?php echo $interval; ?>
+            </div>
+        </blockquote>
+
+        <div class="clearfix"></div>
+        <dl class="dl-horizontal">
+            <dt>Description</dt>
+            <dd><?php echo $lembar->keterangan; ?></dd>
+            <dt>Category</dt>
+            <dd><?php echo $lembar->kategori->nama; ?></dd>
+            <dt>Questions</dt>
+            <dd><?php echo $lembar->limit; ?></dd>
+            <dt>Time Limit</dt>
+            <dd><?php echo $lembar->batas_waktu; ?> Menit</dd>
+            <dt>Random</dt>
+            <dd><?php echo $lembar->is_random ? 'Ya' : 'Tidak'; ?></dd>
+
+        </dl>
+
+
+        <?php if ($userjawablembar->wkt_selesai): ?>
+        <hr/>
+        <!-- Jawaban group-->
+        <blockquote>
+            <p>Answers</p>
+        </blockquote>
+
+        <div class="panel-group" id="accordion">
+            <?php foreach ($userJawab as $key => $jawab): ?>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="popover-hover" data-toggle="collapse" data-parent="#accordion" href="#<?php echo $jawab->id; ?>"
+                           data-content="<?php echo $jawab->is_kosong ? 'Jawaban Kosong' : ($jawab->is_benar ? 'Jawaban Benar' : 'Jawaban Salah'); ?>">
+                            <?php if ($jawab->is_kosong): ?>
+                            <span class="glyphicon glyphicon-minus"></span>
+                            <?php elseif ($jawab->is_benar): ?>
+                            <span class="glyphicon glyphicon-ok"></span>
+                            <?php else: ?>
+                            <span class="glyphicon glyphicon-remove"></span>
+                            <?php endif; ?>
+                            Soal #<?php echo $key + 1; ?>
+                        </a>
+                    </h4>
+                </div>
+                <div id="<?php echo $jawab->id; ?>" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <blockquote>
+                            <?php echo $jawab->soal->pertanyaan; ?>
+                        </blockquote>
+
+                        <div class="list-group">
+                            <a class="list-group-item well-lg">
+                                <?php if($jawab->soal->jawaban[0]->is_benar): ?>
+                                <span class="glyphicon glyphicon-ok"></span>
+                                <?php else: ?>
+                                <?php endif; ?>
+                                <strong>A.</strong> <?php echo $jawab->soal->jawaban[0]->jawaban; ?>
+                                <?php if($jawab->soal->jawaban[0]->id == $jawab->jawaban_id): ?>
+                                <span class="badge pull-right popover-hover" data-content="Jawaban Anda">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </span>
+                                <?php endif; ?>
+                            </a>
+                            <a class="list-group-item well-lg">
+                                <?php if($jawab->soal->jawaban[1]->is_benar): ?>
+                                <span class="glyphicon glyphicon-ok"></span>
+                                <?php else: ?>
+                                <?php endif; ?>
+                                <strong>B.</strong> <?php echo $jawab->soal->jawaban[1]->jawaban; ?>
+                                <?php if($jawab->soal->jawaban[1]->id == $jawab->jawaban_id): ?>
+                                <span class="badge pull-right popover-hover" data-content="Jawaban Anda">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </span>
+                                <?php endif; ?>
+                            </a>
+                            <a class="list-group-item well-lg">
+                                <?php if($jawab->soal->jawaban[2]->is_benar): ?>
+                                <span class="glyphicon glyphicon-ok"></span>
+                                <?php else: ?>
+                                <?php endif; ?>
+                                <strong>C.</strong> <?php echo $jawab->soal->jawaban[2]->jawaban; ?>
+                                <?php if($jawab->soal->jawaban[2]->id == $jawab->jawaban_id): ?>
+                                <span class="badge pull-right popover-hover" data-content="Jawaban Anda">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </span>
+                                <?php endif; ?>
+                            </a>
+                            <a class="list-group-item well-lg">
+                                <?php if($jawab->soal->jawaban[3]->is_benar): ?>
+                                <span class="glyphicon glyphicon-ok"></span>
+                                <?php else: ?>
+                                <?php endif; ?>
+                                <strong>D.</strong> <?php echo $jawab->soal->jawaban[3]->jawaban; ?>
+                                <?php if($jawab->soal->jawaban[3]->id == $jawab->jawaban_id): ?>
+                                <span class="badge pull-right popover-hover" data-content="Jawaban Anda">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </span>
+                                <?php endif; ?>
+
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+
+        <br/>
+        <br/>
+        <?php endif; ?>
+
+        <?php if (!$userjawablembar->wkt_selesai): ?>
+        <a href="<?php echo action('SoalujiansController@show', array($userjawablembar->id, 0)); ?>"
+           class="btn btn-success pull-right">
+            <span class="glyphicon glyphicon-play"></span> Continue
+        </a>
+        <?php else: ?>
+        <a href="<?php echo action('UserjawablembarsController@show', array($userjawablembar->lembar->id)); ?>"
+           class="btn btn-info pull-right">
+            <span class="glyphicon glyphicon-align-left"></span> View Rank
+        </a>
+        <?php endif; ?>
+
+        <?php /* todo lihat ranking */ ?>
+
+    </div>
+</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('sidebar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

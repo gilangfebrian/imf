@@ -1,0 +1,118 @@
+<?php $__env->startSection('content'); ?>
+<!-- Main component for a primary marketing message or call to action -->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 style="padding-left:20px"> Test Rank
+            <small><?php echo $userJawabLembars->first()->lembar->nama; ?></small>
+        </h3>
+    </div>
+
+    <div class="panel-body">
+
+
+        <div class="">
+
+            <?php if (Session::has('messages')): ?>
+            <?php foreach (Session::get('messages') as $message): ?>
+            <?php if ($message[0] == 'error'): ?>
+            <div class="alert alert-danger"><?php echo $message[1]; ?></div>
+            <?php elseif ($message[0] == 'success'): ?>
+            <div class="alert alert-success"><?php echo $message[1]; ?></div>
+            <?php endif; ?>
+            <?php endforeach; ?>
+            <?php endif; ?>
+
+
+            <div class="btn-default btn-lg pull-right popover-hover" data-content="Total Paticipant">
+                <h1><span class="glyphicon glyphicon-align-left"></span> <?php echo count($userJawabLembars); ?></h1>
+            </div>
+
+            <div class="clearfix"></div>
+            <dl class="dl-horizontal">
+                <dt>Description</dt>
+                <dd><?php echo $lembar->keterangan; ?></dd>
+                <dt>Category</dt>
+                <dd><?php echo $lembar->kategori->nama; ?></dd>
+                <dt>Questions</dt>
+                <dd><?php echo $lembar->limit; ?></dd>
+                <dt>Time Limit</dt>
+                <dd><?php echo $lembar->batas_waktu; ?> Menit</dd>
+                <dt>Random</dt>
+                <dd><?php echo $lembar->is_random ? 'Ya' : 'Tidak'; ?></dd>
+
+            </dl>
+
+
+            <?php if ($userJawabLembars->isEmpty()): ?>
+            <div class="">
+                <?php if(!is_array($userJawabLembars)): ?>
+                <div class="alert alert-warning"><strong>Sorry</strong> data not found.</div>
+                <?php endif; ?>
+            </div>
+            <?php endif; ?>
+
+            <?php if (!$userJawabLembars->isEmpty()): ?>
+
+            <table class="table table-hover table-responsive">
+                <thead>
+                <th>Rank</th>
+                <th>Participant</th>
+                <th>Date and Time</th>
+                <th>Grade</th>
+                <th>Time Required</th>
+                <th>Action</th>
+                </thead>
+                <tbody>
+                <?php foreach($userJawabLembars as $key => $userJawabLembar): ?>
+                <tr class="<?php echo $userJawabLembar->user->id == Sentry::getUser()->id ? 'success' : ''; ?>">
+                    <td>
+                        #<?php echo $key + 1; ?>
+                    </td>
+                    <td>
+                        <?php echo $userJawabLembar->user->email; ?>
+                    </td>
+                    <td>
+                        <?php echo date("d F Y H:i:s",strtotime($userJawabLembar->wkt_mulai)); ?>
+                    </td>
+                    <td>
+                        <?php echo $userJawabLembar->wkt_selesai ? $userJawabLembar->score : 'Belum Selesai'; ?>
+                    </td>
+                    <td>
+                        <?php echo $userJawabLembar->interval; ?>
+                    </td>
+                    <td>
+
+
+                        <?php echo Form::open(array('method' => 'DELETE', 'action' => array('UjiansController@destroy',
+                        $userJawabLembar->id) )); ?>
+
+                        <?php if ($userJawabLembar->user->id == Sentry::getUser()->id ||
+                        Sentry::getUser()->hasAccess('admin')): ?>
+                        <a href="<?php echo action('UjiansController@show', array($userJawabLembar->id)); ?>"
+                           class="btn btn-primary btn-xs">
+                            <span class="glyphicon glyphicon-eye-open"></span> Lihat
+                        </a>
+                        <?php endif; ?>
+
+
+                        <?php if (Sentry::getUser()->hasAccess('admin')): ?>
+                        <button type="submit" class="btn btn-danger btn-xs"><span
+                                class="glyphicon glyphicon-remove"></span>
+                            Hapus
+                        </button>
+                        <?php echo Form::close(); ?>
+                        <?php endif; ?>
+
+
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+            <?php endif; ?>
+
+
+        </div>
+    </div>
+    <?php $__env->stopSection(); ?>
+<?php echo $__env->make('sidebar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

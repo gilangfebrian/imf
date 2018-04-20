@@ -1,0 +1,74 @@
+<?php $__env->startSection('content'); ?>
+<!-- Main component for a primary marketing message or call to action -->
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 style="padding-left:20px; padding-right:20px"><?php echo $nomor; ?>
+            <small>/ <?php echo count($all_soal_ids); ?></small>
+
+            <div id="countdown" class="pull-right btn-danger btn popover-hover" href="#"
+                 data-content="Time left"></div>
+            <div id="until" class="hide" ><?php echo $max_time; ?> </div>
+        </h3>
+    </div>
+    <div class="panel-body">
+
+        <?php if (Session::has('messages')): ?>
+        <?php foreach (Session::get('messages') as $message): ?>
+        <?php if ($message[0] == 'error'): ?>
+        <div class="alert alert-danger"><?php echo $message[1]; ?></div>
+        <?php elseif ($message[0] == 'success'): ?>
+        <div class="alert alert-success"><?php echo $message[1]; ?></div>
+        <?php endif; ?>
+        <?php endforeach; ?>
+        <?php endif; ?>
+
+        <div class="clearfix"></div>
+
+        <?php echo Form::open(array('method' => 'put', 'role' => 'form', 'class' => 'form-horizontal', 'action' => array(
+        'SoalujiansController@update', $userjawablembar->id, $soal->id )) ); ?>
+        <blockquote>
+            <?php echo $soal->pertanyaan; ?>
+        </blockquote>
+
+        <div class="list-group">
+            <a class="list-group-item well-lg">
+                <?php echo Form::radio('jawaban', $soal->jawaban[0]->id); ?>
+                &nbsp;
+                <strong>A.</strong> <?php echo $soal->jawaban[0]->jawaban; ?>
+            </a>
+            <a class="list-group-item well-lg">
+                <?php echo Form::radio('jawaban', $soal->jawaban[1]->id); ?>
+                &nbsp;
+                <strong>B.</strong> <?php echo $soal->jawaban[1]->jawaban; ?>
+            </a>
+            <a class="list-group-item well-lg">
+                <?php echo Form::radio('jawaban', $soal->jawaban[2]->id); ?>
+                &nbsp;
+                <strong>C.</strong> <?php echo $soal->jawaban[2]->jawaban; ?>
+            </a>
+
+
+            <a class="list-group-item well-lg">
+                <?php echo Form::radio('jawaban', $soal->jawaban[3]->id); ?>
+                &nbsp;
+                <strong>D.</strong> <?php echo $soal->jawaban[3]->jawaban; ?>
+
+            </a>
+        </div>
+
+
+        <div class="pull-right clearfix" style="padding-right:20px">
+            <?php if (!$is_last_soal): ?>
+            <a href="<?php echo action('SoalujiansController@show', array($userjawablembar->id, $next_soal)); ?>"
+               class="btn btn-danger btn-lg">Skip</a>
+            <?php endif; ?>
+            <?php echo Form::submit($is_last_soal ? 'Finish' : 'Next', array('class' => 'btn btn-success btn-lg')); ?>
+        </div>
+
+        <?php echo Form::close(); ?>
+
+    </div>
+</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('sidebar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

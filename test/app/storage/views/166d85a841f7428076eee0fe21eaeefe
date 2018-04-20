@@ -1,0 +1,80 @@
+
+<?php /* Web site Title */ ?>
+<?php $__env->startSection('title'); ?>
+@parent
+Data Peserta
+<?php $__env->stopSection(); ?>
+
+<?php /* Content */ ?>
+<?php $__env->startSection('content'); ?>
+<?php if(Session::has('message')): ?>
+    <center><span class="label label-success"><?php echo Session::get('message'); ?></span></center>
+<?php endif; ?>
+<p></p>
+<div class="col-md-8 col-md-offset-2">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <center> Data Peserta </center>
+        </div>
+        <div class="panel-body">
+            <?php echo Form::open(array('action' => 'UserController@regist')); ?>
+                    
+            <div class="form-group <?php echo ($errors->has('training')) ? 'has-error' : ''; ?>">
+            <?php echo Form::select('training', array('-' => 'Silahkan Pilih Trainig', '4' => 'Training SAKTI (Rocankeu)', '5' => 'Training Stabilisasi SPAN 2017'), null, ['placeholder' => 'Pilih Training', 'class' => 'form-control']); ?>
+            <?php echo ($errors->has('training') ? $errors->first('training') : ''); ?>
+            </div>
+            
+            <div class="form-group <?php echo ($errors->has('nama')) ? 'has-error' : ''; ?>">
+            <?php echo Form::text('nama', null, array('class' => 'form-control', 'placeholder' => 'Nama')); ?>
+            <?php echo ($errors->has('nama') ? $errors->first('nama') : ''); ?>
+            </div>
+            
+            <div class="form-group <?php echo ($errors->has('nip')) ? 'has-error' : ''; ?>">
+            <?php echo Form::text('nip', null, array('class' => 'form-control', 'placeholder' => 'Nomor Induk Pegawai (NIP)')); ?>
+            <?php echo ($errors->has('nip') ? $errors->first('nip') : ''); ?>
+            </div>
+            
+            <div class="form-group <?php echo ($errors->has('instansi')) ? 'has-error' : ''; ?>">
+            <?php echo Form::select('instansi', array('-' => 'Silahkan Pilih Instansi', 'BKF' => 'Badan Kebijakan Fiskal', 'BPPK' => 'Badan Pendidikan dan Pelatihan Keuangan', 'Setjen' => 'Sekretariat Jenderal', 'Itjen' => 'Inspektorat Jenderal', 'DJBC' => 'Direktorat Jenderal Bea dan Cukai', 'DJA' => 'Direktorat Jenderal Anggaran', 'DJPB' => 'Direktorat Jenderal Perbendaharaan', 'DJP' => 'Direktorat Jenderal Pajak', 'DJPPR' => 'Direktorat Jenderal Pengelolaan Pembiayaan dan Risiko', 'DJPK' => 'Direktorat Jenderal Perimbangan Keuangan', 'DJKN' => 'Direktorat Jenderal Kekayaan Negara'), null, ['placeholder' => 'Pilih Instansi', 'class' => 'form-control']); ?>
+            <?php echo ($errors->has('instansi') ? $errors->first('instansi') : ''); ?>
+            </div>
+            
+            <div class="form-group <?php echo ($errors->has('unit2')) ? 'has-error' : ''; ?>">
+            <?php echo Form::text('unit2', null, array('class' => 'form-control', 'placeholder' => 'Unit Kerja (Es II)')); ?>
+            <?php echo ($errors->has('unit2') ? $errors->first('unit2') : ''); ?>
+            </div>
+            
+            <div class="form-group <?php echo ($errors->has('unit3')) ? 'has-error' : ''; ?>">
+            <?php echo Form::text('unit3', null, array('class' => 'form-control', 'placeholder' => 'Unit Kerja (Es III)')); ?>
+            <?php echo ($errors->has('unit3') ? $errors->first('unit3') : ''); ?>
+            </div>
+            
+            <div class="form-group <?php echo ($errors->has('unit4')) ? 'has-error' : ''; ?>">
+            <?php echo Form::text('unit4', null, array('class' => 'form-control', 'placeholder' => 'Unit Kerja (Es IV)')); ?>
+            <?php echo ($errors->has('unit4') ? $errors->first('unit4') : ''); ?>
+            </div>
+            
+            <div class="form-group <?php echo ($errors->has('npwp')) ? 'has-error' : ''; ?>">
+            <?php echo Form::text('phone', null, array('class' => 'form-control', 'placeholder' => 'Nomor Handphone')); ?>
+            <?php echo ($errors->has('phone') ? $errors->first('phone') : ''); ?>
+            </div>
+            
+            <div class="form-group <?php echo ($errors->has('email')) ? 'has-error' : ''; ?>">
+            <?php echo Form::text('email', null, array('class' => 'form-control', 'placeholder' => 'Alamat Email')); ?>
+            <?php echo ($errors->has('email') ? $errors->first('email') : ''); ?>
+            </div>
+            
+            
+            
+            <?php echo Form::submit('Input Data', array('class' => 'btn btn-success')); ?>
+            <a class="btn btn-danger" href="<?php echo route('home'); ?>">Kembali</a>
+
+            <?php echo Form::close(); ?>
+            
+        </div>
+    </div>
+</div>
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('sidebar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

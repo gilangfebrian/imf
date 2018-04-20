@@ -1,0 +1,32 @@
+
+<?php /* Web site Title */ ?>
+<?php $__env->startSection('title'); ?>
+@parent
+Forgot Password
+<?php $__env->stopSection(); ?>
+
+<?php /* Content */ ?>
+<?php $__env->startSection('content'); ?>
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="panel panel-default">
+        <?php echo Form::open(array('action' => 'UserController@forgot', 'method' => 'post')); ?>
+        <div class="panel-heading">
+        <h4>Forgot your Password?</h4>
+        </div>
+        <div class="panel-body">
+        <div class="form-group <?php echo ($errors->has('email')) ? 'has-error' : ''; ?>">
+            <?php echo Form::text('email', null, array('class' => 'form-control', 'placeholder' => 'E-mail', 'autofocus')); ?>
+            <?php echo ($errors->has('email') ? $errors->first('email') : ''); ?>
+        </div>
+
+        <?php echo Form::submit('Reset Password', array('class' => 'btn btn-primary')); ?>
+        <a class="btn btn-danger" href="<?php echo route('home'); ?>">Kembali</a>
+        <?php echo Form::close(); ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
